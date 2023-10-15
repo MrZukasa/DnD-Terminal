@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 interface JSONAnswer {
     answer: Record<string, any>;
@@ -13,12 +13,6 @@ const getRandomEmoji = () => {
 }
 
 const JSONRenderer: React.FC<JSONAnswer> = ({ answer }) => {
-    const [randomEmoji, setRandomEmoji] = useState<string>('');
-
-    useEffect(() => {
-        setRandomEmoji(getRandomEmoji());
-    }, []);
-
     const removeApiPrefix = (value: string) => {
         return value.startsWith('/api/') ? value.slice(5) : value;
     };
@@ -28,7 +22,7 @@ const JSONRenderer: React.FC<JSONAnswer> = ({ answer }) => {
             {Object.entries(answer).map(([key, value]) => (
                 <li key={key}>
                     {typeof key === 'string' && !/^\d+$/.test(key) && (
-                        <span role="img" aria-label="emoji">{randomEmoji}</span>
+                        <span role="img" aria-label="emoji">{getRandomEmoji()}</span>
                     )}
                     <strong>{key}:</strong>
                     {typeof value === 'object' ? (
@@ -43,5 +37,6 @@ const JSONRenderer: React.FC<JSONAnswer> = ({ answer }) => {
         </ul>
     );
 }
+
 
 export default JSONRenderer;
