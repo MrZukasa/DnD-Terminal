@@ -34,7 +34,7 @@ const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
     return (
         <div>
             <h1>Menù:</h1>
-            <JSONRenderer answare={data} />
+            <JSONRenderer answer={data} />
         </div>
     );
 }
