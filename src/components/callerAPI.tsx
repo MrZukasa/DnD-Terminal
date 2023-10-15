@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import JSONRenderer from './jsonRender';
+
 
 interface CallerAPIProps {
     apiUrl: string;
 }
 
-function renderJSONObject(obj: any) {
-    return (
-        <ul>
-            {Object.entries(obj).map(([key, value]) => (
-                <li key={key}>
-                    <strong>{key}:</strong> {typeof value === 'object' && value !== null ? renderJSONObject(value) : String(value)}
-                </li>
-            ))}
-        </ul>
-    );
-}
-
-function CallerAPI({ apiUrl }: CallerAPIProps) {
+const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
     const [data, setData] = useState<object | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -43,8 +33,8 @@ function CallerAPI({ apiUrl }: CallerAPIProps) {
 
     return (
         <div>
-            <h1>Dati dall'API:</h1>
-            {renderJSONObject(data)}
+            <h1>Menù:</h1>
+            <JSONRenderer answare={data} />
         </div>
     );
 }

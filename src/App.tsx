@@ -23,7 +23,7 @@ const App = () => {
               shell qui
             </span>
             <div className='flex px-1' id='input'>
-              <input placeholder='qui ci scrivi' />
+              <input className=' text-white bg-inherit focus:outline-none' />
             </div>
           </div>
         </div>
