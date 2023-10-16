@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import CallerAPI from './components/callerAPI';
 import LogoGenerator from './components/logoGenerator';
+import HelpMenu from './components/helpMenu';
 
 const App = () => {
   const [apiUrl, setApiUrl] = useState('https://www.dnd5eapi.co/api/');
@@ -9,6 +10,7 @@ const App = () => {
   const [logoKey, setLogoKey] = useState(0); // Cambiare la chiave per forzare il componente LogoGenerator a reinizializzarsi
   const inputRef = useRef<HTMLInputElement>(null);
   const [actualTime, setActualTime] = useState<string>('');
+  const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
     const focusInput = () => {
@@ -67,10 +69,18 @@ const App = () => {
           setApiUrl('https://www.dnd5eapi.co/api/');
           setInputValue('');
           generateRandomLogo();
+          setShowHelp(false);
+          break;
+        case 'h':
+        case 'H':
+          setApiUrl('https://www.dnd5eapi.co/api/');
+          setShowHelp(true);
+          console.log(showHelp);
           break;
         default:
           setApiUrl('https://www.dnd5eapi.co/api/' + inputValue)
           setInputValue('');
+          setShowHelp(false);
           break;
       }
     }
@@ -89,7 +99,7 @@ const App = () => {
             <LogoGenerator key={logoKey} /> {/* Usare la chiave per forzare la reinizializzazione del componente LogoGenerator */}
           </div>
           <div className='mt-4 flex'>
-            <CallerAPI apiUrl={apiUrl} />
+            {showHelp ? <HelpMenu /> : <CallerAPI apiUrl={apiUrl} />}
           </div>
           <div className='mt-4 flex'>
             <span>
