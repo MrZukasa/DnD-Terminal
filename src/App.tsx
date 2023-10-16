@@ -8,6 +8,7 @@ const App = () => {
   const [inputValue, setInputValue] = useState('');
   const [logoKey, setLogoKey] = useState(0); // Cambiare la chiave per forzare il componente LogoGenerator a reinizializzarsi
   const inputRef = useRef<HTMLInputElement>(null);
+  const [actualTime, setActualTime] = useState<string>('');
 
   useEffect(() => {
     const focusInput = () => {
@@ -24,6 +25,26 @@ const App = () => {
 
     // Rimuovi il listener quando il componente si smonta
     return () => window.removeEventListener('load', focusInput);
+  }, []);
+
+  useEffect(() => {
+    const updateActualTime = () => {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      setActualTime(`${hours}:${minutes}:${seconds}`);
+    };
+
+    // Aggiorna l'ora attuale all'avvio del componente
+    updateActualTime();
+
+    // Aggiorna l'ora attuale ogni secondo
+    const interval = setInterval(updateActualTime, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   const generateRandomLogo = () => {
@@ -54,7 +75,7 @@ const App = () => {
 
   return (
     <>
-      <div className='w-full sticky'>
+      <div className='w-full'>
         <div className='coding inverse-toggle px-5 pt-4 shadow-lg text-gray-100 text-sm font-mono subpixel-antialiased
               bg-gray-800  pb-6 pt-4 leading-normal overflow-hidden'>
           <div className='top mb-2 flex'>
@@ -70,7 +91,7 @@ const App = () => {
           </div>
           <div className='mt-4 flex'>
             <span className='text-green-400' id='shell'>
-              shell qui
+              master@:{actualTime}$ ~
             </span>
             <div className='flex px-1' id='input'>
               <input
