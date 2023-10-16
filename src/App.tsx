@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import LogoGenerator from './components/logoGenerator';
 import ShellInput from './components/shellInput';
 import ContentRenderer from './components/contentRenderer';
@@ -58,11 +58,11 @@ const App = () => {
     setLogoKey(prevKey => prevKey + 1);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleInputKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
       switch (inputValue) {
         case 'i':
@@ -82,7 +82,8 @@ const App = () => {
           break;
         case 'g':
         case 'G':
-          setApiUrl('https://www.dnd5eapi.co/api/');
+          // setApiUrl('https://www.dnd5eapi.co/api/');
+          setApiUrl('');
           setInputValue('');
           setShowHelp(false);
           setShowNameGenerator(true);

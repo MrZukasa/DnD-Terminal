@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import JSONRenderer from './jsonRender';
-import React from 'react';
+import Loading from './loading';
 
 
 interface CallerAPIProps {
@@ -10,10 +10,11 @@ interface CallerAPIProps {
 
 const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
     const [data, setData] = useState<object | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [errorCheck, seterrorCheck] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         axios.get(apiUrl)
             .then(response => {
                 setData(response.data);
@@ -22,13 +23,13 @@ const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
             })
             .catch(error => {
                 console.error('Si è verificato un errore durante la richiesta API:', error);
-                seterrorCheck(true);
+                seterrorCheck(false);
                 setLoading(false);
             });
     }, [apiUrl]);
 
     if (loading) {
-        return <div>Caricamento in corso...</div>;
+        return <Loading />;
     }
 
     if (!data || errorCheck) {
