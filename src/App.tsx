@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './App.css';
-import CallerAPI from './components/callerAPI';
 import LogoGenerator from './components/logoGenerator';
-import HelpMenu from './components/helpMenu';
+import ShellInput from './components/shellInput';
+import ContentRenderer from './components/contentRenderer';
+import './App.css';
 
 const App = () => {
   const [apiUrl, setApiUrl] = useState('https://www.dnd5eapi.co/api/');
-  const [inputValue, setInputValue] = useState('');
   const [logoKey, setLogoKey] = useState(0); // Cambiare la chiave per forzare il componente LogoGenerator a reinizializzarsi
+  const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const [actualTime, setActualTime] = useState<string>('');
   const [showHelp, setShowHelp] = useState(false);
+  const [showNameGenerator, setShowNameGenerator] = useState(false);
 
   useEffect(() => {
     const focusInput = () => {
@@ -70,17 +71,27 @@ const App = () => {
           setInputValue('');
           generateRandomLogo();
           setShowHelp(false);
+          setShowNameGenerator(false);
           break;
         case 'h':
         case 'H':
           setApiUrl('https://www.dnd5eapi.co/api/');
+          setInputValue('');
           setShowHelp(true);
-          console.log(showHelp);
+          setShowNameGenerator(false);
+          break;
+        case 'g':
+        case 'G':
+          setApiUrl('https://www.dnd5eapi.co/api/');
+          setInputValue('');
+          setShowHelp(false);
+          setShowNameGenerator(true);
           break;
         default:
           setApiUrl('https://www.dnd5eapi.co/api/' + inputValue)
           setInputValue('');
           setShowHelp(false);
+          setShowNameGenerator(false);
           break;
       }
     }
@@ -99,24 +110,20 @@ const App = () => {
             <LogoGenerator key={logoKey} /> {/* Usare la chiave per forzare la reinizializzazione del componente LogoGenerator */}
           </div>
           <div className='mt-4 flex'>
-            {showHelp ? <HelpMenu /> : <CallerAPI apiUrl={apiUrl} />}
+            <ContentRenderer
+              apiUrl={apiUrl}
+              showHelp={showHelp}
+              showNameGenerator={showNameGenerator}
+            />
           </div>
           <div className='mt-4 flex'>
-            <span>
-              <span className='text-amber-500'>master</span>
-              <span className='text-opacity-75 text-amber-200'>@</span>
-              <span className='text-amber-200 text-opacity-50'>{actualTime}</span>
-              <span className='text-amber-200 text-opacity-75'>: $ ~</span>
-            </span>
-            <div className='flex-1 px-1 w-full'>
-              <input
-                className=' text-green-400 bg-inherit focus:outline-none w-full'
-                value={inputValue}
-                onKeyDown={handleInputKeyPress}
-                onChange={handleInputChange}
-                ref={inputRef}
-              />
-            </div>
+            <ShellInput
+              actualTime={actualTime}
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
+              onInputKeyPress={handleInputKeyPress}
+              inputRef={inputRef}
+            />
           </div>
         </div>
       </div>

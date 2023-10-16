@@ -38,7 +38,7 @@ const JSONRenderer: React.FC<JSONAnswer> = ({ answer }) => {
                     {typeof value === 'object' ? (
                         <JSONRenderer answer={value} />
                     ) : (
-                        <span className={key === 'url' ? 'text-yellow-400' : key === 'name' ? 'text-green-400' : ''}>
+                        <span className={key === 'url' ? 'text-cyan-200' : key === 'name' ? 'text-green-400' : ''}>
                             {removeApiPrefix(String(value))}
                         </span>
                     )}
