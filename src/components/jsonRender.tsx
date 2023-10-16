@@ -34,7 +34,7 @@ const JSONRenderer: React.FC<JSONAnswer> = ({ answer }) => {
                     {typeof key === 'string' && !/^\d+$/.test(key) && (
                         <span role="img" aria-label="emoji">{randomEmojis[index]}</span>
                     )}
-                    <strong>{key}:</strong>
+                    <span className='text-amber-200'>{key}:</span>
                     {typeof value === 'object' ? (
                         <JSONRenderer answer={value} />
                     ) : (

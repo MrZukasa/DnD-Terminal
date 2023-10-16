@@ -17,14 +17,19 @@ const App = () => {
         setInputValue('');
       }
     }
-    // Aggiungi il listener per il caricamento della pagina
+
     window.addEventListener('load', () => {
       focusInput();
       generateRandomLogo();
     });
 
-    // Rimuovi il listener quando il componente si smonta
-    return () => window.removeEventListener('load', focusInput);
+    window.addEventListener('click', () =>
+      focusInput());
+
+    return () => {
+      window.removeEventListener('load', focusInput);
+      window.removeEventListener('click', focusInput);
+    }
   }, []);
 
   useEffect(() => {
@@ -42,9 +47,7 @@ const App = () => {
     // Aggiorna l'ora attuale ogni secondo
     const interval = setInterval(updateActualTime, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, []);
 
   const generateRandomLogo = () => {
@@ -75,9 +78,8 @@ const App = () => {
 
   return (
     <>
-      <div className='w-full'>
-        <div className='coding inverse-toggle px-5 pt-4 shadow-lg text-gray-100 text-sm font-mono subpixel-antialiased
-              bg-gray-800  pb-6 pt-4 leading-normal overflow-hidden'>
+      <div className='m-2 p-2 bg-stone-800 min-h-screen border-2 border-yellow-600 rounded'>
+        <div className='coding inverse-toggle px-2 pt-2 text-amber-100 text-sm font-mono subpixel-antialiased pb-6 leading-normal overflow-hidden'>
           <div className='top mb-2 flex'>
             <div className='h-3 w-3 bg-red-500 rounded-full'></div>
             <div className='ml-2 h-3 w-3 bg-orange-300 rounded-full'></div>
@@ -90,12 +92,15 @@ const App = () => {
             <CallerAPI apiUrl={apiUrl} />
           </div>
           <div className='mt-4 flex'>
-            <span className='text-green-400' id='shell'>
-              master@:{actualTime}$ ~
+            <span>
+              <span className='text-amber-500'>master</span>
+              <span className='text-opacity-75 text-amber-200'>@</span>
+              <span className='text-amber-200 text-opacity-50'>{actualTime}</span>
+              <span className='text-amber-200 text-opacity-75'>: $ ~</span>
             </span>
-            <div className='flex px-1' id='input'>
+            <div className='flex-1 px-1 w-full'>
               <input
-                className='text-white bg-inherit focus:outline-none'
+                className=' text-green-400 bg-inherit focus:outline-none w-full'
                 value={inputValue}
                 onKeyDown={handleInputKeyPress}
                 onChange={handleInputChange}
