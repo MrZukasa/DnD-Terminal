@@ -11,7 +11,7 @@ interface CallerAPIProps {
 const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
     const [data, setData] = useState<object | null>(null);
     const [loading, setLoading] = useState(false);
-    const [errorCheck, seterrorCheck] = useState(false);
+    const [errorCheck, setErrorCheck] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -19,11 +19,11 @@ const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
             .then(response => {
                 setData(response.data);
                 setLoading(false);
-                seterrorCheck(false);
+                setErrorCheck(false);
             })
             .catch(error => {
                 console.error('Si è verificato un errore durante la richiesta API:', error);
-                seterrorCheck(false);
+                setErrorCheck(true);
                 setLoading(false);
             });
     }, [apiUrl]);
