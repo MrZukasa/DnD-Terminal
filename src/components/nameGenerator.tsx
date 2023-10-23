@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import maleApiUrl from '../initiatorURL';
+import maleApiList from '../initiatorName';
+
+interface Muna {
+    names: string;
+}
 
 const NameGenerator: React.FC = () => {
+    const [result, setResult] = useState<Muna[]>([]);
+    const resultName: string[] = maleApiList;
+    const isMounting = useRef(false);
 
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'm') {
-                'https://muna.ironarachne.com/dwarf/?count=30&nameType=male'
-            } else if (e.key === 'f') {
-                'https://muna.ironarachne.com/dwarf/?count=30&nameType=female'
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
+        isMounting.current = true
+        Promise.all(maleApiUrl.map((URI) =>
+            axios.get(URI).then(response => response.data.names[0])
+        )).then((dataArray) => setResult(dataArray));
     }, []);
 
     return (
-        <>
-            <div>
-                <span> .\ Press 'i' to go back to the MAIN entry list.</span>
-                <br />
-                <span> .\ Press 'm' to generate 10 male names.</span>
-                <br />
-                <span> .\ Press 'f' to generate 10 female names.</span>
-            </div>
-        </>
+        <div>
+            {result.map((data, index) => (
+                <div key={index}>
+                    <span> {resultName[index]} Name: {data}</span>
+                </div>
+            ))}
+        </div>
     );
 }
 

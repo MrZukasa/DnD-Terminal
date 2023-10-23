@@ -82,8 +82,6 @@ const App = () => {
           break;
         case 'g':
         case 'G':
-          // setApiUrl('https://www.dnd5eapi.co/api/');
-          setApiUrl('');
           setInputValue('');
           setShowHelp(false);
           setShowNameGenerator(true);
