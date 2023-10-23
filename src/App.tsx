@@ -12,12 +12,12 @@ const App = () => {
   const [actualTime, setActualTime] = useState<string>('');
   const [showHelp, setShowHelp] = useState(false);
   const [showNameGenerator, setShowNameGenerator] = useState(false);
+  const [path, setPath] = useState<string>();
 
   useEffect(() => {
     const focusInput = () => {
       if (inputRef.current) {
         inputRef.current.focus();
-        setInputValue('');
       }
     }
 
@@ -72,6 +72,7 @@ const App = () => {
           generateRandomLogo();
           setShowHelp(false);
           setShowNameGenerator(false);
+          setPath('main');
           break;
         case 'h':
         case 'H':
@@ -79,18 +80,21 @@ const App = () => {
           setInputValue('');
           setShowHelp(true);
           setShowNameGenerator(false);
+          setPath('help')
           break;
         case 'g':
         case 'G':
           setInputValue('');
           setShowHelp(false);
           setShowNameGenerator(true);
+          setPath('Name Generator')
           break;
         default:
           setApiUrl('https://www.dnd5eapi.co/api/' + inputValue)
-          setInputValue('');
+          setInputValue(inputValue);
           setShowHelp(false);
           setShowNameGenerator(false);
+          setPath(inputValue)
           break;
       }
     }
@@ -122,6 +126,7 @@ const App = () => {
               onInputChange={handleInputChange}
               onInputKeyPress={handleInputKeyPress}
               inputRef={inputRef}
+              path={path}
             />
           </div>
         </div>

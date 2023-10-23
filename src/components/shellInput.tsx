@@ -6,6 +6,7 @@ interface ShellInputProps {
     onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onInputKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     inputRef: React.RefObject<HTMLInputElement>;
+    path?: string;
 }
 
 const ShellInput: React.FC<ShellInputProps> = ({
@@ -14,14 +15,16 @@ const ShellInput: React.FC<ShellInputProps> = ({
     onInputChange,
     onInputKeyPress,
     inputRef,
+    path,
 }) => {
     return (
         <>
             <span>
                 <span className='text-amber-500'>master</span>
-                <span className='text-opacity-75 text-amber-200'>@</span>
-                <span className='text-amber-200 text-opacity-50'>{actualTime}</span>
-                <span className='text-amber-200 text-opacity-75'>: $ ~ </span>
+                <span className='text-opacity-75 text-amber-200'>{'@'}</span>
+                <span className='text-opacity-75 text-blue-200'>{path}</span>
+                <span className='text-amber-200 text-opacity-50'>{'\ue725' + actualTime}</span>
+                <span className='text-amber-200 text-opacity-75'>: λ ~ </span>
             </span>
             <div className='flex-1 px-1 w-full'>
                 <input
