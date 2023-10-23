@@ -12,7 +12,7 @@ const App = () => {
   const [actualTime, setActualTime] = useState<string>('');
   const [showHelp, setShowHelp] = useState(false);
   const [showNameGenerator, setShowNameGenerator] = useState(false);
-  const [path, setPath] = useState<string>();
+  const [path, setPath] = useState<string>('main');
 
   useEffect(() => {
     const focusInput = () => {
