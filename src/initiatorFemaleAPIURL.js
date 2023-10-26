@@ -1,16 +1,16 @@
 const femaleApiUrl = [
-    'https://muna.ironarachne.com/dragonborn/?count=1&nameType=female',
-    'https://muna.ironarachne.com/dwarf/?count=1&nameType=female',
-    'https://muna.ironarachne.com/elf/?count=1&nameType=female',
-    'https://muna.ironarachne.com/gnome/?count=1&nameType=female',
-    'https://muna.ironarachne.com/goblin/?count=1&nameType=female',
-    'https://muna.ironarachne.com/halfling/?count=1&nameType=female',
-    'https://muna.ironarachne.com/halfelf/?count=1&nameType=female',
-    'https://muna.ironarachne.com/halforc/?count=1&nameType=female',
-    'https://muna.ironarachne.com/human/?count=1&nameType=female',
-    'https://muna.ironarachne.com/orc/?count=1&nameType=female',
-    'https://muna.ironarachne.com/tiefling/?count=1&nameType=female',
-    'https://muna.ironarachne.com/troll/?count=1&nameType=female',
+    '/api/dragonborn/?count=1&nameType=female',
+    '/api/dwarf/?count=1&nameType=female',
+    '/api/elf/?count=1&nameType=female',
+    '/api/gnome/?count=1&nameType=female',
+    '/api/goblin/?count=1&nameType=female',
+    '/api/halfling/?count=1&nameType=female',
+    '/api/halfelf/?count=1&nameType=female',
+    '/api/halforc/?count=1&nameType=female',
+    '/api/human/?count=1&nameType=female',
+    '/api/orc/?count=1&nameType=female',
+    '/api/tiefling/?count=1&nameType=female',
+    '/api/troll/?count=1&nameType=female',
 ]
 
 export default femaleApiUrl;

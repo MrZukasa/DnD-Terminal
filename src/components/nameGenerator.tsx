@@ -13,7 +13,7 @@ const NameGenerator: React.FC = () => {
     const [result, setResult] = useState<Muna[]>([]);
     const resultName: string[] = raceList;
     const isMounting = useRef(false);
-    const loadingDuration = 20200;
+    const loadingDuration = 20200; //TODO fixare il timer qui in maniera che sia appaiato alla lettura della API
     const [loadingProgress, setLoadingProgress] = useState(0);
     const [loading, setLoading] = useState(false);
 
