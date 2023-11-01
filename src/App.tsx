@@ -5,14 +5,16 @@ import ContentRenderer from './components/contentRenderer';
 import './App.css';
 
 const App = () => {
-  const [apiUrl, setApiUrl] = useState('https://www.dnd5eapi.co/api/');
+  const [apiUrl, setApiUrl] = useState('https://api.open5e.com/');
   const [logoKey, setLogoKey] = useState(0); // Cambiare la chiave per forzare il componente LogoGenerator a reinizializzarsi
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const [actualTime, setActualTime] = useState<string>('');
   const [showHelp, setShowHelp] = useState(false);
   const [showNameGenerator, setShowNameGenerator] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [path, setPath] = useState<string>('main');
+  const [mainCheck, setMainCheck] = useState(true);
 
   useEffect(() => {
     const focusInput = () => {
@@ -59,7 +61,8 @@ const App = () => {
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    if (!e.target.value.startsWith(' '))
+      setInputValue(e.target.value);
   };
 
   const handleInputKeyPress = (e: KeyboardEvent) => {
@@ -67,34 +70,54 @@ const App = () => {
       switch (inputValue) {
         case 'i':
         case 'I':
-          setApiUrl('https://www.dnd5eapi.co/api/');
+        case '':
+          setApiUrl('https://api.open5e.com/');
           setInputValue('');
           generateRandomLogo();
           setShowHelp(false);
           setShowNameGenerator(false);
+          setShowSearch(false);
           setPath('main');
+          setMainCheck(true);
           break;
         case 'h':
         case 'H':
-          setApiUrl('https://www.dnd5eapi.co/api/');
           setInputValue('');
           setShowHelp(true);
           setShowNameGenerator(false);
-          setPath('help')
+          setShowSearch(false);
+          setPath('help');
+          setMainCheck(false);
           break;
         case 'g':
         case 'G':
           setInputValue('');
           setShowHelp(false);
           setShowNameGenerator(true);
+          setShowSearch(false);
           setPath('Name Generator')
+          setMainCheck(false);
+          break;
+        case 's':
+        case 'S':
+          setInputValue('');
+          setShowHelp(false);
+          setShowNameGenerator(false);
+          setShowSearch(true);
+          setPath('Searching');
+          setMainCheck(false);
           break;
         default:
-          setApiUrl('https://www.dnd5eapi.co/api/' + inputValue)
+          if (!showSearch)
+            setApiUrl('https://api.open5e.com/v1/' + inputValue)
+          else
+            setApiUrl('https://api.open5e.com/search/?text=' + inputValue)
           setInputValue(inputValue);
           setShowHelp(false);
           setShowNameGenerator(false);
+          setShowSearch(false);
           setPath(inputValue)
+          setMainCheck(false);
           break;
       }
     }
@@ -117,6 +140,8 @@ const App = () => {
               apiUrl={apiUrl}
               showHelp={showHelp}
               showNameGenerator={showNameGenerator}
+              showSearch={showSearch}
+              mainCheck={mainCheck}
             />
           </div>
           <div className='mt-4 flex'>
@@ -127,6 +152,7 @@ const App = () => {
               onInputKeyPress={handleInputKeyPress}
               inputRef={inputRef}
               path={path}
+              searchMode={showSearch}
             />
           </div>
         </div>

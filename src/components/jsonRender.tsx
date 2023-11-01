@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 interface JSONAnswer {
     answer: Record<string, any>;
+    mainMenu: boolean;
 }
 
 const emojis = [
@@ -15,7 +16,7 @@ const getRandomEmoji = () => {
     return emojis[randomIndex];
 }
 
-const JSONRenderer: React.FC<JSONAnswer> = ({ answer }) => {
+const JSONRenderer: React.FC<JSONAnswer> = ({ answer, mainMenu }) => {
     const [randomEmojis, setRandomEmojis] = useState<string[]>([]);
 
     useEffect(() => {
@@ -23,23 +24,19 @@ const JSONRenderer: React.FC<JSONAnswer> = ({ answer }) => {
         setRandomEmojis(initialEmojis);
     }, []);
 
-    const removeApiPrefix = (value: string) => {
-        return value.startsWith('/api/') ? value.slice(5) : value;
-    };
-
     return (
         <ul className="pl-4">
-            {Object.entries(answer).map(([key, value], index) => (
+            {answer && Object.entries(answer).map(([key, value], index) => (
                 <li key={key}>
-                    {typeof key === 'string' && !/^\d+$/.test(key) && (
+                    {typeof key === 'string' && (
                         <span role="img" aria-label="emoji">{randomEmojis[index]}</span>
                     )}
-                    <span className='text-amber-200'>{key}:</span>
+                    <span className='text-amber-200'>{key}</span>
                     {typeof value === 'object' ? (
-                        <JSONRenderer answer={value} />
+                        <JSONRenderer answer={value} mainMenu={mainMenu} />
                     ) : (
                         <span className={key === 'url' ? 'text-cyan-200' : key === 'name' ? 'text-green-400' : ''}>
-                            {removeApiPrefix(String(value))}
+                            {!mainMenu && ': ' + String(value)}
                         </span>
                     )}
                 </li>

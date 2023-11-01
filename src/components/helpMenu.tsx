@@ -1,6 +1,6 @@
 import React from 'react'
 
-const helpMenu = () => {
+const helpMenu: React.FC = () => {
     return (
         <div>
             <span> .\ Press 'i' to list all the MAIN entry available.</span>

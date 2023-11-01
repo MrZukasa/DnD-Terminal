@@ -6,9 +6,10 @@ import Loading from './loading';
 
 interface CallerAPIProps {
     apiUrl: string;
+    mainCheck: boolean;
 }
 
-const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
+const CallerAPI = ({ apiUrl, mainCheck }: CallerAPIProps) => {
     const [data, setData] = useState<object | null>(null);
     const [loading, setLoading] = useState(false);
     const [errorCheck, setErrorCheck] = useState(false);
@@ -17,12 +18,17 @@ const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
         setLoading(true);
         axios.get(apiUrl)
             .then(response => {
-                setData(response.data);
+                if (!response.data.results) {
+                    setData(response.data)
+                }
+                else {
+                    setData(response.data.results);
+                }
                 setLoading(false);
                 setErrorCheck(false);
             })
             .catch(error => {
-                console.error('Si è verificato un errore durante la richiesta API:', error);
+                console.log('Si è verificato un errore durante la richiesta API:', error);
                 setErrorCheck(true);
                 setLoading(false);
             });
@@ -45,7 +51,7 @@ const CallerAPI = ({ apiUrl }: CallerAPIProps) => {
     return (
         <div>
             <span></span>
-            <JSONRenderer answer={data} />
+            <JSONRenderer answer={data} mainMenu={mainCheck} />
             <br />
             <span className='text-amber-200 text-opacity-50'> .\ press 'h' to see the list of available commands.</span>
         </div>
