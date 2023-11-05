@@ -40,7 +40,12 @@ const JSONRenderer: React.FC<JSONAnswer> = ({ answer, mainMenu }) => {
                     && key !== 'target_range_sort'
                     && key !== 'created_at'
                     && key !== 'copyright'
+                    && key !== 'highlighted'
+                    && key !== 'plus_dex_mod'
+                    && key !== 'plus_con_mod'
+                    && key !== 'plus_wis_mod'
                     && key !== 'document__slug'
+                    && key !== 'document_slug'
                     && key !== 'requires_concentration') ? (
                     (value !== 0 && value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) && (
                         <li key={key}>
@@ -49,7 +54,7 @@ const JSONRenderer: React.FC<JSONAnswer> = ({ answer, mainMenu }) => {
                             {typeof value === 'object' ? (
                                 <JSONRenderer answer={value} mainMenu={mainMenu} />
                             ) : (
-                                <span className={key === 'slug' ? 'text-cyan-200' : key === 'name' ? 'text-green-400' : ''}>
+                                <span className={key === 'slug' || key === 'route' ? 'text-cyan-200' : key === 'name' ? 'text-green-400' : ''}>
                                     {!mainMenu ? (
                                         typeof value === 'string'
                                             && ((value.indexOf('*') !== -1) || (value.indexOf('|') !== -1)) ? (

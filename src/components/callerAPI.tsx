@@ -38,7 +38,7 @@ const CallerAPI = ({ apiUrl, mainCheck }: CallerAPIProps) => {
         return <Loading />;
     }
 
-    if (!data || errorCheck) {
+    if (!data || errorCheck || (Array.isArray(data) && data.length === 0)) {
         return (
             <div>
                 <div className=' text-red-300'> .\ Oh-oh! it seems there is nothing here ( ͡° ͜ʖ ͡°)</div>
@@ -46,16 +46,16 @@ const CallerAPI = ({ apiUrl, mainCheck }: CallerAPIProps) => {
                 <div className=' text-amber-200 text-opacity-50'> .\ press 'h' to see the list of available commands.</div>
             </div>
         );
+    } else {
+        return (
+            <div>
+                <span></span>
+                <JSONRenderer answer={data} mainMenu={mainCheck} />
+                <br />
+                <span className='text-amber-200 text-opacity-50'> .\ press 'h' to see the list of available commands.</span>
+            </div>
+        );
     }
-
-    return (
-        <div>
-            <span></span>
-            <JSONRenderer answer={data} mainMenu={mainCheck} />
-            <br />
-            <span className='text-amber-200 text-opacity-50'> .\ press 'h' to see the list of available commands.</span>
-        </div>
-    );
 }
 
 export default CallerAPI;
