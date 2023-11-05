@@ -6,6 +6,8 @@ const helpMenu: React.FC = () => {
             <span> .\ Press 'i' to list all the MAIN entry available.</span>
             <br />
             <span> .\ Press 'g' to generate a random name.</span>
+            <br />
+            <span> .\ Press 's' to search through the Wiki.</span>
         </div>
     )
 }
