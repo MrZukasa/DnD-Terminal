@@ -5,7 +5,7 @@ import ContentRenderer from './components/contentRenderer';
 import './App.css';
 
 const App = () => {
-  const [apiUrl, setApiUrl] = useState('https://api.open5e.com/');
+  const [apiUrl, setApiUrl] = useState('http://localhost:3000/main');
   const [logoKey, setLogoKey] = useState(0); // Cambiare la chiave per forzare il componente LogoGenerator a reinizializzarsi
   const [inputValue, setInputValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -71,7 +71,7 @@ const App = () => {
         case 'i':
         case 'I':
         case '':
-          setApiUrl('https://api.open5e.com/');
+          setApiUrl('http://localhost:3000/main');
           setInputValue('');
           generateRandomLogo();
           setShowHelp(false);
@@ -109,7 +109,7 @@ const App = () => {
           break;
         default:
           if (!showSearch)
-            setApiUrl('https://api.open5e.com/v1/' + inputValue)
+            setApiUrl('http://localhost:3000/main/' + inputValue)
           else
             setApiUrl('https://api.open5e.com/search/?text=' + inputValue)
           setInputValue(inputValue);
